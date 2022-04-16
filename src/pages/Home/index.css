@@ -1,0 +1,37 @@
+.home .intro {
+  height: 680px;
+  text-align: center;
+  padding-top: 235px;
+}
+.home .intro h1 {
+  height: 50px;
+  font-size: 55px;
+  font-weight: 600;
+  color: #ecf8ff;
+  letter-spacing: 3px;
+  text-shadow: 0 1px hsl(0, 0%, 85%), 0 2px hsl(0, 0%, 80%), 0 3px hsl(0, 0%, 75%), 0 7px 10px black;
+}
+.home .intro h3 {
+  height: 50px;
+  font-size: 30px;
+  color: #c7dcea;
+}
+.home .mainContent {
+  display: flex;
+  padding: 0 80px;
+}
+.home .mainContent .leftSider {
+  height: 100px;
+  width: 90px;
+  font-size: 16px;
+  background-color: white;
+  box-shadow: 0px 3px 6px -4px rgba(0, 0, 0, 0.12), 0px 6px 16px 0px rgba(0, 0, 0, 0.08), 0px 9px 28px 8px rgba(0, 0, 0, 0.05);
+}
+.home .mainContent .blog {
+  flex: 1;
+  padding: 0 15px 20px;
+  box-shadow: 0px 3px 6px -4px rgba(0, 0, 0, 0.12), 0px 6px 16px 0px rgba(0, 0, 0, 0.08), 0px 9px 28px 8px rgba(0, 0, 0, 0.05);
+}
+.home .mainContent .rightSider {
+  width: 260px;
+}

@@ -1,0 +1,20 @@
+.sitedataCard {
+  height: 80px;
+  padding: 10px 20px;
+  background-color: white;
+  margin-bottom: 12px;
+}
+.sitedataCard .carditem {
+  height: 30px;
+}
+.sitedataCard .carditem .left,
+.sitedataCard .carditem .right {
+  display: inline-block;
+  font-size: 16px;
+}
+.sitedataCard .carditem .left {
+  float: left;
+}
+.sitedataCard .carditem .right {
+  float: right;
+}

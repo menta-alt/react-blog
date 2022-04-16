@@ -1,0 +1,18 @@
+.blogItem {
+  padding: 5px 20px;
+  border-bottom: 1px solid #ddd;
+  background-color: white;
+}
+.blogItem .title {
+  font-weight: 500;
+}
+.blogItem .description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.blogItem .info {
+  color: #969696;
+}

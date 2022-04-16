@@ -1,0 +1,23 @@
+.intro {
+  height: 350px;
+  text-align: center;
+  padding-top: 170px;
+}
+.intro h1 {
+  height: 50px;
+  font-size: 50px;
+  font-weight: 500;
+  color: #ecf8ff;
+  letter-spacing: 10px;
+  text-shadow: 0 1px hsl(0, 0%, 85%), 0 2px hsl(0, 0%, 80%), 0 7px 10px black;
+}
+.mainContent {
+  padding: 0 150px;
+  height: 700px;
+}
+.mainContent .aboutme {
+  height: 100%;
+  background: white;
+  padding: 50px 60px;
+  box-shadow: 0px 1px 4px -2px rgba(0, 0, 0, 0.2), 0px 3px 8px 0px rgba(0, 0, 0, 0.19), 0px 5px 16px 6px rgba(0, 0, 0, 0.12);
+}

@@ -1,0 +1,15 @@
+.switchCard {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+.switchCard span {
+  color: #ddd;
+  font-size: 22px;
+}
+.switchCard .activeAbout {
+  color: #58a;
+}
+.switchCard .switchBtn {
+  margin: 0 12px 8px;
+}

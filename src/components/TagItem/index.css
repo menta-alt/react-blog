@@ -1,0 +1,10 @@
+.ant-tag {
+  font-size: 15px;
+  line-height: 24px !important;
+  margin: 0 8px 10px 0 !important;
+  border-radius: 0.5em;
+}
+.ant-tag:hover {
+  cursor: pointer;
+  box-shadow: 3px 3px 6px -3px rgba(0, 0, 0, 0.5);
+}

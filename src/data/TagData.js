@@ -1,0 +1,38 @@
+// 该文件是标签的数据
+const TagData = [
+  'Html',
+  'CSS',
+  'JavaScript',
+  'Vue',
+  'React',
+  '计算机网络',
+  'Webpack',
+  'Rollup',
+  'Vite',
+  '前端工程化',
+  'javaweb',
+  'SpringBoot',
+  'mysql',
+  'maven',
+  'Grunt',
+  '操作系统',
+  '机器学习',
+  'PHP',
+  'Node',
+  '移动端开发',
+  'AntD',
+  '浏览器',
+  'Github',
+  'rax',
+  'flutter',
+  'python',
+  'Java',
+  'Scala',
+  '计算机组成原理',
+  'D3.js',
+  '数据可视化',
+  'WebGL',
+  '人工智能'
+]
+
+export default TagData
