@@ -13,8 +13,6 @@ export default function Main() {
           { element }
         </Suspense>
       </ErrorBoundary>
-
-
     </main>
   )
 }

@@ -20,11 +20,11 @@ const routes = [
     element: <Home/>,
     children: [
       {
-        path:'hot',
+        path:'articles/hot',
         element: <HotContent/>
       },
       {
-        path:'recent',
+        path:'articles/recent',
         element: <RecentContent/>
       }
     ]
@@ -63,11 +63,11 @@ const routes = [
   },
   {
     path: '/',
-    element: <Navigate to="/home/hot"/>
+    element: <Navigate to="/home/articles/hot"/>
   },
   {
     path: '/home',
-    element: <Navigate to="/home/hot"/>
+    element: <Navigate to="/home/articles/hot"/>
   }
 ]
 

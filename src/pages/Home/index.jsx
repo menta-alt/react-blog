@@ -13,8 +13,8 @@ export default function Home() {
     <div className='home'>
       {/* 上方导语 */}
       <div className='intro'>
-        <h1>ELvira's Planent</h1>
-        <h3>hasta la vista</h3>
+        <h1>ELvira's&nbsp; Planent</h1>
+        <h3>一天比一天柔肠百转地冷酷起来</h3>
       </div>
 
       {/* 主体内容 */}

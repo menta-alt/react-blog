@@ -12,7 +12,8 @@ export default function TagCard() {
     const fixedTagTop = tagRef.current.offsetTop  //第一次为0
 
     window.onscroll = () => {
-      if(!fixedTagTop || window.scrollY < tagHeight.current || window.scrollY > 1900) {
+      // if(!fixedTagTop || window.scrollY < tagHeight.current || window.scrollY > 1500) {
+      if(!fixedTagTop || window.scrollY < tagHeight.current) {
         setFixed(false)
       } else {
         if(fixedTagTop > tagHeight.current)  tagHeight.current = fixedTagTop

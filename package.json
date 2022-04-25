@@ -9,6 +9,7 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "antd": "^4.19.5",
+    "axios": "^0.26.1",
     "craco-less": "^2.0.0",
     "highlight.js": "^11.5.1",
     "marked": "^4.0.14",
@@ -46,5 +47,6 @@
   },
   "devDependencies": {
     "redux-devtools-extension": "^2.13.9"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }
