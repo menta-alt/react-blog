@@ -63,11 +63,11 @@ const routes = [
   },
   {
     path: '/',
-    element: <Navigate to="/home/articles/hot"/>
+    element: <Navigate to="/home/articles/recent"/>
   },
   {
     path: '/home',
-    element: <Navigate to="/home/articles/hot"/>
+    element: <Navigate to="/home/articles/recent"/>
   }
 ]
 

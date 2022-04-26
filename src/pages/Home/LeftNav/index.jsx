@@ -5,8 +5,8 @@ import './index.less'
 export default function LeftNav() {
   return (
     <>
-      <NavLink className="item hot" to='hot'>最热文章</NavLink>
-      <NavLink className="item" to='recent'>最新发布</NavLink>
+      <NavLink className="item" to='articles/recent'>最新发布</NavLink>
+      <NavLink className="item hot" to='articles/hot'>最热文章</NavLink>
     </>
   )
 }
