@@ -1,0 +1,158 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+em,
+i {
+  font-style: normal;
+}
+img {
+  border: 0;
+}
+a {
+  text-decoration: none;
+  color: #353535;
+}
+/* 清除浮动 */
+.clearfix::after {
+  content: "";
+  /*必须写*/
+  visibility: hidden;
+  clear: both;
+  display: block;
+  height: 0;
+}
+.clearfix {
+  *zoom: 1;
+}
+/* 该文件用于代码段的高亮设置 */
+#hljs {
+  padding: 10px 15px;
+  color: #c9d1d9;
+  background-color: #252b30;
+  border-radius: 4px;
+}
+#hljs code {
+  background-color: #252b30;
+  padding: 0;
+  font-size: 16px;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace, 'FiraCode', 'dengxian';
+}
+#hljs .hljs-doctag,
+#hljs .hljs-keyword,
+#hljs .hljs-meta .hljs-keyword,
+#hljs .hljs-template-tag,
+#hljs .hljs-template-variable,
+#hljs .hljs-type,
+#hljs .hljs-variable.language_ {
+  /* prettylights-syntax-keyword */
+  color: #ff7b72;
+}
+#hljs .hljs-title,
+#hljs .hljs-title.class_,
+#hljs .hljs-title.class_.inherited__,
+#hljs .hljs-title.function_ {
+  /* prettylights-syntax-entity */
+  color: #d2a8ff;
+}
+#hljs .hljs-attr,
+#hljs .hljs-attribute,
+#hljs .hljs-literal,
+#hljs .hljs-meta,
+#hljs .hljs-number,
+#hljs .hljs-operator,
+#hljs .hljs-variable,
+#hljs .hljs-selector-attr,
+#hljs .hljs-selector-class,
+#hljs .hljs-selector-id {
+  /* prettylights-syntax-constant */
+  color: #79c0ff;
+}
+#hljs .hljs-regexp,
+#hljs .hljs-string,
+#hljs .hljs-meta .hljs-string {
+  /* prettylights-syntax-string */
+  color: #a5d6ff;
+}
+#hljs .hljs-built_in,
+#hljs .hljs-symbol {
+  /* prettylights-syntax-variable */
+  color: #ffa657;
+}
+#hljs .hljs-comment,
+#hljs .hljs-code,
+#hljs .hljs-formula {
+  /* prettylights-syntax-comment */
+  color: #8b949e;
+}
+#hljs .hljs-name,
+#hljs .hljs-quote,
+#hljs .hljs-selector-tag,
+#hljs .hljs-selector-pseudo {
+  /* prettylights-syntax-entity-tag */
+  color: #7ee787;
+}
+#hljs .hljs-subst {
+  /* prettylights-syntax-storage-modifier-import */
+  color: #c9d1d9;
+}
+#hljs .hljs-section {
+  /* prettylights-syntax-markup-heading */
+  color: #1f6feb;
+  font-weight: bold;
+}
+#hljs .hljs-bullet {
+  /* prettylights-syntax-markup-list */
+  color: #f2cc60;
+}
+#hljs .hljs-emphasis {
+  /* prettylights-syntax-markup-italic */
+  color: #c9d1d9;
+  font-style: italic;
+}
+#hljs .hljs-strong {
+  /* prettylights-syntax-markup-bold */
+  color: #c9d1d9;
+  font-weight: bold;
+}
+#hljs .hljs-addition {
+  /* prettylights-syntax-markup-inserted */
+  color: #aff5b4;
+  background-color: #033a16;
+}
+#hljs .hljs-deletion {
+  /* prettylights-syntax-markup-deleted */
+  color: #ffdcd7;
+  background-color: #67060c;
+}
+/* 滚动条 */
+#hljs::-webkit-scrollbar {
+  height: 12px;
+}
+/* 滚动槽 */
+#hljs::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0);
+}
+/* 滚动条滑块 */
+#hljs::-webkit-scrollbar-thumb {
+  background-color: #275f59;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+@media screen and (max-width: 1240px) {
+  #hljs {
+    padding: 5rem 10rem;
+    border-radius: 12rem;
+  }
+  #hljs code {
+    font-size: 14rem;
+  }
+  #hljs::-webkit-scrollbar {
+    height: 8rem;
+  }
+  #hljs::-webkit-scrollbar-thumb {
+    border-bottom-left-radius: 8rem;
+    border-bottom-right-radius: 8rem;
+  }
+}

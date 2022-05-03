@@ -1,8 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react'
 import { Input, Button } from 'antd';
-import { RedoOutlined } from '@ant-design/icons';
 import BlogItemCard from '@/components/BlogItemCard';
-import Paging from '@/components/Paging/'
 import { httpGet } from '@/utils/api/axios.js'
 import './index.less'
 
@@ -66,6 +64,9 @@ export default function SearchBlog() {
             >显示全部文章</Button>
           </div>
           
+          {/* 文章总数 */}
+          <p className='sum'>总共 {isSearch ? searchResult.length : originData.length} 条记录</p>
+
           {/* 找到的文章 */}
           <div className='result'>
             {
@@ -84,7 +85,6 @@ export default function SearchBlog() {
         </div>
       </div>
 
-      <Paging/>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import Main from './components/Main/index.jsx'
 import Footer from './components/Footer/index.jsx'
 import { BackTop } from 'antd';
 import './App.less'
-import './styles/base.css'
+import './styles/base.less'
 
 function App() {
   return (

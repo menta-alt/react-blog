@@ -16,7 +16,7 @@ export default function TagItem() {
     <>
       {
         tags.map((item) => (
-          <Tag color="blue" key={item.id}>{item.tagName}</Tag>
+          <Tag className='tag' color="blue" key={item.id}>{item.tagName}</Tag>
         ))
       }
     </>

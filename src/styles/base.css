@@ -3,28 +3,21 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 em,
 i {
   font-style: normal;
 }
-
 img {
   border: 0;
 }
-
 a {
   text-decoration: none;
   color: #353535;
 }
-
-li {
-  list-style: none;
-}
-
 /* 清除浮动 */
 .clearfix::after {
-  content: ""; /*必须写*/
+  content: "";
+  /*必须写*/
   visibility: hidden;
   clear: both;
   display: block;
@@ -33,5 +26,3 @@ li {
 .clearfix {
   *zoom: 1;
 }
-
-

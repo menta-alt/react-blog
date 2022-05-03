@@ -45,6 +45,7 @@ export default function BlogContent() {
               description={item.description}
               time={item.createTime}
               viewCounts={item.viewCounts}
+              commentCounts={item.commentCounts}
             />
           ))
         }

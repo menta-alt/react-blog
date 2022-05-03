@@ -1,7 +1,9 @@
 import React from 'react'
 import {marked} from 'marked'
-import 'highlight.js/styles/github.css'; //highlight需要自己手动引入css文件，否则页面样式不生效
+// import 'highlight.js/styles/github.css'; //highlight需要自己手动引入css文件，否则页面样式不生效
 import hljs from "highlight.js";
+import './hljsCustom.less'
+import './index.less'
 
 export default function Markdown(props) {
   const {content} = props
@@ -14,7 +16,7 @@ export default function Markdown(props) {
   marked.setOptions({
     renderer: new marked.Renderer(),
     highlight: code => hljs.highlightAuto(code).value,
-    gfm: true, // 默认为true。 允许 Git Hub标准的markdown.
+    gfm: true, // 默认为true。 允许 GitHub标准的markdown.
     breaks: true, // 默认为false。 允许回车换行。该选项要求 gfm 为true。
     pedantic: false,
     tables: true,
@@ -25,6 +27,11 @@ export default function Markdown(props) {
   });
 
   return (
-    <div dangerouslySetInnerHTML={{ __html: marked(content || '') }}></div>
+    <div 
+      className='mark'
+      dangerouslySetInnerHTML={{ 
+        __html: marked(content || '').replace(/<pre>/g, "<pre id='hljs'>")
+      }}>
+    </div>
   )
 }

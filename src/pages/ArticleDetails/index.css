@@ -1,26 +1,33 @@
 .detailsContainer {
   display: flex;
-  padding: 120px 80px;
+  padding: 120px 70px;
 }
 .detailsContainer .leftInfo {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 85px;
-  height: 160px;
-  padding: 15px 10px;
+  width: 80px;
+  height: 140px;
   background: white;
   margin-right: 10px;
 }
 .detailsContainer .leftInfo .count {
   text-align: center;
+  height: 70px;
 }
 .detailsContainer .leftInfo .count p {
   margin: 0;
 }
 .detailsContainer .leftInfo .count .icon {
+  margin-top: 10px;
   color: #58a;
-  font-size: 30px;
+  font-size: 26px;
+}
+.detailsContainer .leftInfo .count:hover {
+  transition: 0.4s;
+  transform: scale(1.03);
+  box-shadow: 0px 3px 6px -4px rgba(0, 0, 0, 0.12), 0px 6px 16px 0px rgba(0, 0, 0, 0.08), 0px 9px 28px 8px rgba(0, 0, 0, 0.05);
+  background: #f5f5f5;
 }
 .detailsContainer .details {
   flex: 1;
@@ -29,6 +36,29 @@
   background: white;
   box-shadow: 0px 3px 6px -4px rgba(0, 0, 0, 0.12), 0px 6px 16px 0px rgba(0, 0, 0, 0.08), 0px 9px 28px 8px rgba(0, 0, 0, 0.05);
 }
+.detailsContainer .details .articleInfo {
+  border-bottom: 1px solid #d9d9d9;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+}
+.detailsContainer .details .articleInfo .author,
+.detailsContainer .details .articleInfo .time {
+  margin-right: 15px;
+}
+.detailsContainer .details .articleInfo .tags {
+  float: right;
+}
+.detailsContainer .details .articleInfo .tags .tag {
+  font-size: 13px;
+}
+.detailsContainer .details .articleInfo .tags .tag:hover {
+  cursor: pointer;
+  box-shadow: 3px 3px 6px -3px rgba(0, 0, 0, 0.5);
+}
+.detailsContainer .details .title {
+  text-align: center;
+  margin-bottom: 60px;
+}
 .detailsContainer .details a {
   pointer-events: none;
 }
@@ -36,7 +66,10 @@
   color: black !important;
   cursor: default;
 }
+.detailsContainer .details p {
+  font-size: 15px;
+}
 .detailsContainer .catalog {
-  width: 240px;
+  width: 200px;
   background: white;
 }
