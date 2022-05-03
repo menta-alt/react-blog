@@ -1,31 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import BlogItemCard from 'components/BlogItemCard'
-import { httpPost } from '@/utils/api/axios'
+import { httpPost, httpGet } from '@/utils/api/axios'
 import store from '@/redux/store.js'
 import PubSub from 'pubsub-js'
 import Paging from 'components/Paging'
 import './index.less'
 
-export default function HotContent() {
+export default function BlogContent() {
   const [blogdata, setBlogData] = useState([])
-  const [hotPage, setHotPage] = useState(1)
+  const [articlePage, setArticlePage] = useState(1)
+  const [total, setTotal] = useState(1)
+  const [acticleType] = useState(store.getState().articleType)
 
   useEffect(() => {
+    console.log(acticleType);
     // 初始化加载第一页
-    if(hotPage === 1) {
-      httpPost('/articles/hot', { "page": 1 }).then(res => setBlogData(res))
+    if(articlePage === 1) {
+      httpPost(`/articles/${acticleType}`, { "page": 1 }).then(res => setBlogData(res))
+      httpGet('/articles').then(res => setTotal(res.length))
     }
 
     const unsubscribe = store.subscribe(() => {
-      httpPost('/articles/hot', { "page": store.getState().hotArticles }).then(res => setBlogData(res))
-      setHotPage(store.getState().hotArticles)
+      httpPost(`/articles/${acticleType}`, { "page": store.getState().articlePage }).then(res => {
+        setBlogData(res)
+      })
+      setArticlePage(store.getState().articlePage)
     })
     return () => {
       unsubscribe()
     }
-  },[hotPage])
+  },[articlePage, acticleType])
 
-  PubSub.publish('test', blogdata.length)
+  PubSub.publish('articleCount', total)
   
   return (
     <div>
@@ -34,6 +40,7 @@ export default function HotContent() {
           blogdata.map((item) => (
             <BlogItemCard 
               key={item.id}
+              id={item.id}
               title={item.title}
               description={item.description}
               time={item.createTime}
@@ -43,7 +50,7 @@ export default function HotContent() {
         }
       </ul>
       
-      <Paging total={13}/>
+      <Paging total={total}/>
     </div>
   )
 }

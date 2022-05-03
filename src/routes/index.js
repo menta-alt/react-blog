@@ -1,7 +1,7 @@
 import { lazy } from 'react'
 import { Navigate } from 'react-router-dom'
 
-const Search = lazy(() => import('@/pages/Articles/Search'))
+const SearchBlog = lazy(() => import('@/pages/Articles/SearchBlog'))
 const Tag = lazy(() => import('@/pages/Articles/Tag'))
 const Classes = lazy(() => import('@/pages/Articles/Classes'))
 const Message = lazy(() => import('@/pages/Message'))
@@ -10,28 +10,22 @@ const Works = lazy(() => import('@/pages/Works'))
 const AboutMe = lazy(() => import('@/pages/About/AboutMe'))
 const AboutSite = lazy(() => import('@/pages/About/AboutSite'))
 const Home = lazy(() => import('@/pages/Home'))
-const HotContent = lazy(() => import('@/pages/Home/BlogContent/HotContent'))
-const RecentContent = lazy(() => import('@/pages/Home/BlogContent/RecentContent'))
+const ArticleDetails = lazy(() => import('@/pages/ArticleDetails/'))
 
 
 const routes = [
   {
-    path:'/home/*',
+    path:'/articles',
     element: <Home/>,
-    children: [
-      {
-        path:'articles/hot',
-        element: <HotContent/>
-      },
-      {
-        path:'articles/recent',
-        element: <RecentContent/>
-      }
-    ]
   }, 
   {
+    path:'/articles/details/:id',
+    element: <ArticleDetails/>,
+    exact: true
+  },
+  {
     path:'/search',
-    element: <Search/>,
+    element: <SearchBlog/>,
   }, 
   {
     path:'/tag',
@@ -63,12 +57,12 @@ const routes = [
   },
   {
     path: '/',
-    element: <Navigate to="/home/articles/recent"/>
+    element: <Navigate to="/articles"/>
   },
-  {
-    path: '/home',
-    element: <Navigate to="/home/articles/recent"/>
-  }
+  // {
+  //   path: '/articles',
+  //   element: <Navigate to="/articles/recent"/>
+  // }
 ]
 
 export default routes

@@ -26,7 +26,7 @@ export default function TagCard() {
 
   return (
     <div className={`tagCard ${needFixed ? 'fixedTagCard' : ''}`} ref={tagRef}>
-      <TagItem/>
+      <TagItem />
     </div>
   )
 }

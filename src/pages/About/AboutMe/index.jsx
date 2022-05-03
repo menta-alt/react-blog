@@ -1,15 +1,18 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import SwitchCard from '@/components/SwitchCard'
 import Markdown from '@/components/MarkDown'
+import { httpGet } from '@/utils/api/axios.js'
 import './index.less'
 
 export default function AboutMe() {
-  const content = `
-    关于我😄
-    -嘻嘻嘻
-    -我爱你哦
-    -呸呸呸
-  `
+  const [content,setContent] = useState('')
+  
+  useEffect(() => {
+    httpGet('/aboutme').then(res => {
+      setContent(res.content)
+    })
+  },[])
+
   return (
     <div>
       {/* 上方导语 */}
@@ -22,7 +25,7 @@ export default function AboutMe() {
         <div className="aboutme">
           <SwitchCard/>
 
-          <div className='content'>
+          <div className='contentHtml'>
             <Markdown content={content || ''}/>
           </div>
         </div>

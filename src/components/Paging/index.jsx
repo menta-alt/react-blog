@@ -3,15 +3,15 @@
 */
 import React from 'react'
 import store from '@/redux/store.js'
-import { changeHotPage } from '@/redux/actions/hotArticles.js'
+import { changeArticlePage } from '@/redux/actions/articlePage.js'
 import { Pagination } from 'antd'
 import './index.less'
 
 export default function Paging(props) {
-  const {total} = props
+  const { total } = props
   
   const pagingHandler = (page, pagesize) => {
-    store.dispatch(changeHotPage(page))
+    store.dispatch(changeArticlePage(page))
   }
 
   return (
@@ -23,7 +23,6 @@ export default function Paging(props) {
         showSizeChanger={false}
         showQuickJumper 
         showTotal={total => `总共 ${total} 条`} 
-        hideOnSinglePage={true}
         onChange={pagingHandler}
       />
     </>

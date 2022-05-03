@@ -1,0 +1,53 @@
+.detailsContainer{
+  display: flex;
+  padding: 120px 80px;
+
+  .leftInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 85px;
+    height: 160px;
+    padding: 15px 10px;
+    background: white;
+    margin-right: 10px;
+    
+    .count {
+      text-align: center;
+
+      p {
+        margin: 0;
+      }
+
+      .icon {
+        color: #58a;
+        font-size: 30px;
+      }
+    }
+
+  }
+
+  .details{
+    flex: 1;
+    padding: 20px 30px;
+    margin-right: 10px;
+    background: white;
+    box-shadow: 0px 3px 6px -4px rgba(0,0,0,0.12),
+                  0px 6px 16px 0px rgba(0,0,0,0.08),
+                  0px 9px 28px 8px rgba(0, 0, 0, 0.05);
+
+    a {
+      pointer-events: none; //禁用a标签
+    }
+
+    a:hover{
+      color: black !important;
+      cursor: default;
+    }
+  }
+
+  .catalog {
+    width: 240px;
+    background: white;
+  }
+}

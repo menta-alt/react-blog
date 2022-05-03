@@ -1,14 +1,22 @@
 import { Tag } from 'antd';
-import React from 'react'
-import TagData from '@/data/TagData.js'
+import React, { useEffect, useState } from 'react'
+import { httpGet } from '@/utils/api/axios.js'
 import './index.less'
 
 export default function TagItem() {
+  const [tags, setTags] = useState([])  //初始化里面不要空着，要写个[]
+
+  useEffect(() => {
+    httpGet('/tags').then(res => {
+      setTags(res)
+    })
+  },[])
+
   return (
     <>
       {
-        TagData.map((name,index) => (
-          <Tag color="blue" key={index}>{name}</Tag>
+        tags.map((item) => (
+          <Tag color="blue" key={item.id}>{item.tagName}</Tag>
         ))
       }
     </>

@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { httpGet } from '@/utils/api/axios.js'
 import './index.less'
 import Schedule from '@/components/Schedule/'
 
 export default function Log() {
+  const [logs, setLogs] = useState([])
+
+  useEffect(() => {
+    httpGet('/logs').then(res => {
+      setLogs(res)
+    })
+  },[])
+
   return (
     <div>
       {/* 上方导语 */}
@@ -12,7 +21,7 @@ export default function Log() {
 
       <div className="mainContent">
         <div className="schedule">
-          <Schedule/>
+          <Schedule logs={logs}/>
         </div>
       </div>
     </div>

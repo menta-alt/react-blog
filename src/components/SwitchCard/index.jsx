@@ -10,7 +10,7 @@ export default function SwitchCard() {
   const navigate = useNavigate()
   const switchRef = useRef()
   const [aboutme, setAboutMe] = useState(store.getState().about)
-  console.log('aboutme:',aboutme);
+  // console.log('aboutme:',aboutme);
 
   useEffect(() => {
     // if(aboutme) { //关于我
@@ -20,7 +20,7 @@ export default function SwitchCard() {
     // }
 
     const unsubscribe = store.subscribe(() => {
-      console.log('redux:',store.getState().about);
+      // console.log('redux:',store.getState().about);
       setAboutMe()
     })
     return () => {
@@ -36,7 +36,7 @@ export default function SwitchCard() {
     } else {
       navigate('/aboutsite')
     }
-    console.log(`switch to ${checked}`);
+    // console.log(`switch to ${checked}`);
   }
 
   return (

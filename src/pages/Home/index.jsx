@@ -1,5 +1,5 @@
 import React from 'react'
-import {Outlet} from 'react-router-dom'
+import BlogContent from '../Home/BlogContent/index.jsx'
 import IntroCard from '../Home/Aside/IntroCard/index.jsx'
 import TagCard from '../Home/Aside/TagCard/index.jsx'
 import StatisticsCard from '../Home/Aside/StatisticsCard/index.jsx'
@@ -26,8 +26,7 @@ export default function Home() {
 
         {/* 主体博客内容 */}
         <div className='blog'>
-          {/* 指定路由组件呈现的位置 */}
-          <Outlet/>
+          <BlogContent/>
         </div>
 
         {/* 右侧内容 */}

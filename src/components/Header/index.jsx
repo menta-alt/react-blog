@@ -19,7 +19,7 @@ export default function Header() {
   return (
     <header>
       {/* logo和个人信息 */}
-      <NavLink className='info' to='/home'>ELvira 的博客</NavLink>
+      <NavLink className='info' to='/'>ELvira 的博客</NavLink>
 
       {/* 导航区 */}
       <div className='navArea'>

@@ -7,7 +7,7 @@ export default function StatisticsCard() {
   const [articleSum, setArticleSum] = useState(0)
 
   useEffect(() => {
-    PubSub.subscribe('test', function(method,len) {
+    PubSub.subscribe('articleCount', function(method,len) {
       setArticleSum(len)
     })
   },[])

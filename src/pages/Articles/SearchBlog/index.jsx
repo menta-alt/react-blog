@@ -1,24 +1,38 @@
-import React, {useRef} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import { Input, Button } from 'antd';
 import { RedoOutlined } from '@ant-design/icons';
 import BlogItemCard from '@/components/BlogItemCard';
 import Paging from '@/components/Paging/'
-import SearchResult from '@/data/SearchResult.js'
-
+import { httpGet } from '@/utils/api/axios.js'
 import './index.less'
 
+const { Search } = Input
 
-export default function Search() {
-  const { Search } = Input;
+export default function SearchBlog() {
+  const [originData, setOriginData] = useState([])
+  const [searchResult, setSearchResult] = useState([])
+  const [isSearch, setIsSearch] = useState(false)
   const inputValue = useRef()
+
+  useEffect(() => {
+    inputValue.current.focus()
+
+    httpGet('/articles').then(res => {
+      setOriginData(res)
+    })
+  },[])
 
   // 输入框的回调
   const onSearch = value => {
-    console.log('value:',value);
+    const newResult = originData.filter(item => item.title.includes(value))
+    setSearchResult(newResult)
+    setIsSearch(true)
   }
 
   // 重置输入框
-  const clearInput = () => inputValue.current.input.value = ''
+  const clearInput = () => {
+    inputValue.current.input.value = ''
+  }
 
   return (
     <div>
@@ -37,31 +51,31 @@ export default function Search() {
               placeholder="请输入要搜索的文章关键词" 
               size="large"
               onSearch={onSearch}   
+              allowClear={true}
               enterButton 
-              style={{ width: 800, marginRight: 10 }}
+              style={{ width: 700, marginRight: 10 }}
               ref={inputValue}
             />
 
-            {/* 重置按钮 */}
+            {/* 显示全部按钮 */}
             <Button 
               type="primary" 
-              icon={<RedoOutlined />} 
               size='large' 
-              style={{ width: 48 }}
+              style={{ width: 150 }}
               onClick={clearInput}
-            />
+            >显示全部文章</Button>
           </div>
           
           {/* 找到的文章 */}
           <div className='result'>
             {
-              SearchResult.map((item) => (
+              (isSearch ? searchResult : originData).map((item) => (
                 <BlogItemCard 
                   key={item.id}
                   title={item.title}
                   description={item.description}
-                  time={item.time}
-                  visitcount={item.visitcount}
+                  time={item.createTime}
+                  viewCounts={item.viewCounts}
                 />
               ))
             }

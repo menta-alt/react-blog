@@ -3,19 +3,20 @@
 */ 
 import React from 'react'
 import { Steps } from 'antd';
-import ScheduleData from '@/data/ScheduleData.js'
 
 const { Step } = Steps;
 
-export default function Schedule() {
+export default function Schedule(props) {
+  const { logs } = props
+
   return (
     <>
       <Steps progressDot direction="vertical">
         {
-          ScheduleData.map((item, index) => (
+          logs.map((item) => (
             <Step
-              key={index}
-              title={item.title}
+              key={item.id}
+              title={item.createTime}
               description={item.description}
             />
           ))
