@@ -1,10 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card } from 'antd'
 import WorksData from '@/data/WorksData'
+import { httpGet } from '@/utils/api/axios.js'
 import './index.less'
 
 const { Meta } = Card
+
 export default function Works() {
+  const [worksData, setWorkData] = useState([]) 
+
+  useEffect(() => {
+    httpGet('/works').then(res => setWorkData(res))
+  },[])
+  
   return (
     <div>
       {/* 上方导语 */}
@@ -16,14 +24,14 @@ export default function Works() {
       <div className="mainContent">
         <div className="works">
           {
-            WorksData.map((item,index) => (
+            worksData.map((item) => (
               <Card 
                 className='workItem'
                 hoverable 
-                key={index}
+                key={item.id}
                 style={{ width: 280 }} 
-                cover={<img alt="example" src={item.src} style={{height: '200px'}}/>}>
-                <Meta title={item.title} description={item.description} />
+                cover={<img alt="example" src={item.cover} style={{height: '200px'}}/>}>
+                <Meta title={item.title} description={item.url} />
               </Card>
             ))
           }

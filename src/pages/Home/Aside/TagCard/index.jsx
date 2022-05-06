@@ -5,7 +5,7 @@ import './index.less'
 export default function TagCard() {
   const tagRef = useRef()
   const tagHeight = useRef(0) //保存tag卡片的高度
-  const [needFixed, setFixed] = useState(null)
+  const [needFixed, setFixed] = useState(false)
 
   // 处理tagCard是否固定
   useEffect(() => { //相当于componentDidMount()钩子
