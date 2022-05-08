@@ -1,5 +1,5 @@
 import React from 'react'
-import Comment from '@/components/Comment'
+import Msg from '@/components/Msg'
 
 import './index.less'
 
@@ -14,7 +14,7 @@ export default function Message() {
       <div className="mainContent">
         <div className="comment">
           <p className='info'>欢迎大家给我留言呀😄</p>
-          <Comment/>
+          <Msg/>
         </div>
       </div>
     </div>

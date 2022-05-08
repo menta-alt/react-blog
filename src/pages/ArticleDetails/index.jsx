@@ -2,20 +2,24 @@ import React, {useEffect, useState} from 'react'
 import { useParams,useLocation } from "react-router-dom";
 import Markdown from '@/components/MarkDown'
 import { httpPost } from '@/utils/api/axios.js'
-import { Tooltip, Tag, Input,Divider, Button, Form, Comment, Avatar  } from 'antd';
+import { Tooltip, Tag, Divider, Button, Form, Avatar  } from 'antd';
 import {EyeFilled, MessageFilled, MailOutlined, SmileOutlined} from '@ant-design/icons';
 import MarkNav from 'markdown-navbar';
+import Comment from '@/components/Comment/';
+import PubSub from 'pubsub-js' 
 import 'markdown-navbar/dist/navbar.css';
 import './index.less'
 
-const { TextArea } = Input;
 
 export default function ArticleDetails() {
-  const [content,setContent] = useState('')
-  const [tags, setTags] = useState([])
   const { id } = useParams()
   const { title, time, viewCounts, commentCounts } = useLocation().state || {}
+  const [content,setContent] = useState('')
+  const [tags, setTags] = useState([])
   const [isScroll, setIsScroll] = useState(false)
+  const [commentCount, setCommentCount] = useState(0)
+
+  PubSub.subscribe("commentCount", (method, commentCount) => setCommentCount(commentCount))
 
   useEffect(() => {
     httpPost(`/articles/details/${id}`).then( res => setContent(res.content) )
@@ -30,25 +34,7 @@ export default function ArticleDetails() {
     }
   },[])
 
-  const publishComment = () => {
-
-  }
-
-  const ExampleComment = ({ children }) => (
-    <Comment
-      actions={[<span key="comment-nested-reply-to">Reply to</span>]}
-      author={<a>Han Solo</a>}
-      avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
-      content={
-        <p>
-          We supply a series of design principles, practical patterns and high quality design
-          resources (Sketch and Axure).
-        </p>
-      }
-    >
-      {children}
-    </Comment>
-  );
+  PubSub.publish("sendArticleId", id)
 
   return (
     <div className='detailsContainer'>
@@ -59,7 +45,7 @@ export default function ArticleDetails() {
         </Tooltip>
         <Tooltip title="评论数" color='cyan' placement="bottomRight" className='count'>
           <MessageFilled className='icon'/>
-          <p>{commentCounts}</p>
+          <p>{commentCount}</p>
         </Tooltip>
       </div>
       
@@ -83,29 +69,9 @@ export default function ArticleDetails() {
 
         {/* 分割线 */}
         <Divider className='line'>End</Divider>
-        <Divider orientation="left" className='commentLine'>评论</Divider>
-
-        {/* 显示留言区 */}
-        <div className="commentArea">
-          <ExampleComment>
-            <ExampleComment />
-            <ExampleComment />
-          </ExampleComment>
-        </div>
-
-        {/* 发布评论区 */}
-        <div className="commentPublish">
-          <Form>
-            <TextArea showCount maxLength={500} rows={6} placeholder="快来和我聊聊天呀！" />
-            <Input className='nameInput' size="large" placeholder="昵称" allowClear 
-                  prefix={<SmileOutlined />} />
-            <Input className='emailInput' size="large" placeholder="邮箱" allowClear 
-                  prefix={<MailOutlined />} />
-            <Button type="primary" size="large" onClick={publishComment}>发布评论</Button>
-          </Form>
-        </div>
-
-
+        
+        {/* 评论区 */}
+        <Comment articleId={id}/>
       </div>
 
       <div className={`catalog ${ isScroll ? 'navTopChange' : ''}`}>

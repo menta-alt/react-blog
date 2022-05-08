@@ -1,8 +1,8 @@
 /**
  * 该文件是评论区和留言区发布言论的编辑器
  */
-import React, { useRef, useState } from 'react'
-import { Comment, Form, Button, Input } from 'antd'
+import React, { useEffect, useRef, useState } from 'react'
+import { Comment, Form, Button, List, Input } from 'antd'
 import { httpPost } from '@/utils/api/axios.js'
 import PubSub from 'pubsub-js' 
 import { MailOutlined, SmileOutlined } from '@ant-design/icons'
@@ -11,7 +11,7 @@ import './index.less'
 const { TextArea } = Input
 
 // 留言发布的编辑区
-const Editor = ({title, onFinish, onFinishFailed, values, commentRef, level, setShowEditor }) => (
+const Editor = ({onFinish, onFinishFailed, values, commentRef, title, isReply, setShowEditor }) => (
   <Form
     name="publishComment"
     onFinish={onFinish}
@@ -66,7 +66,7 @@ const Editor = ({title, onFinish, onFinishFailed, values, commentRef, level, set
       </Button>
     </Form.Item>
     {
-      (level === 2) &&
+      isReply &&
       <Form.Item className='cancelBtn'>
         <Button size="large" onClick={() => setShowEditor(false)}>
           取消
@@ -76,8 +76,7 @@ const Editor = ({title, onFinish, onFinishFailed, values, commentRef, level, set
   </Form>
 );
 
-
-export default function EditorBox({ title, level, articleId, parentId, setShowEditor, replyToWho, id }) {
+export default function EditorBox({title, isReply, setShowEditor, replyToWho, id, msgId}) {
   const commentRef = useRef();
 
   const [infos, setInfos] = useState({
@@ -86,39 +85,31 @@ export default function EditorBox({ title, level, articleId, parentId, setShowEd
     email: ''
   })
 
+
   // 处理发布或回复留言成功
   const onFinish = values => {
     setInfos(values)
 
-    if(level === 1) { //发布评论
-      console.log("articleId1", articleId);
-      httpPost('/comments/publish', {
-        "articleId": articleId,
-        "parentId": 0,
+    if(isReply) { //是回复
+      httpPost('/msgReply/publish', {
+        "msgId": msgId,
         "nickname": values.nickname,
         "email": values.email,
         "content": values.comment,
-        "replyToWho": replyToWho,
-        "level": 1
-      }).then(comment => {
-        PubSub.publish("setComment", comment)
-      })
-    } else {  //回复评论
-      console.log("articleId2", articleId);
-      httpPost('/comments/publish', {
-        "articleId": articleId,
-        "parentId": parentId,
-        "nickname": values.nickname,
-        "email": values.email,
-        "content": values.comment,
-        "replyToWho": replyToWho,
-        "level": 2
-      }).then(comment => {
+        "replyToWho": replyToWho
+      }).then(reply => {
         setShowEditor(false)
-        PubSub.publish("setComment", comment)
+        PubSub.publish('setReplies', reply)
+      })
+    } else { //是发布留言
+      httpPost('/messages/publish', {
+        "nickname": values.nickname,
+        "email": values.email,
+        "content": values.comment,
+      }).then(msg => {
+        PubSub.publish('setMsgs', msg)
       })
     }
-    
   }
 
   const onFinishFailed = errorInfo => {
@@ -132,10 +123,10 @@ export default function EditorBox({ title, level, articleId, parentId, setShowEd
           <Editor 
             onFinish={onFinish} 
             onFinishFailed={onFinishFailed} 
-            title={title}
             values={infos} 
             commentRef={commentRef} 
-            level={level}
+            title={title}
+            isReply={isReply}
             setShowEditor={setShowEditor}
           />
         } 

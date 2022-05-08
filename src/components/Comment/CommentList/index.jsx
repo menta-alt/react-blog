@@ -1,41 +1,70 @@
 // 该文件是留言显示区的组件
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CommentItem from './CommentItem'
-import msgs from '@/data/Msg.js'
-import replies from '@/data/ReplyData.js'
+import PubSub from 'pubsub-js' 
+import {httpPost} from '@/utils/api/axios.js'
 import './index.less'
 
 
-export default function PublishComment() {
+export default function CommentList() {
+  const [commentsLevelOne, setCommentsLevelOne] = useState([])
+  const [commentsLevelTwo, setCommentsLevelTwo] = useState([])
+  const [articleId, setArticleId] = useState(-1)
+  const [commentCount, setCommentCount] = useState(0)
+
+  useEffect(() => {
+    httpPost('/comments', {
+       "level": 1, 
+       "articleId": articleId 
+    }).then(res => setCommentsLevelOne(res))
+    httpPost('/comments', { 
+      "level": 2,
+      "articleId": articleId 
+    }).then(res => setCommentsLevelTwo(res))
+
+    setCommentCount(commentsLevelOne.length + commentsLevelTwo.length)
+  }, [articleId,commentsLevelOne,commentsLevelTwo])
+
+  PubSub.publish('commentCount', commentCount)
+  PubSub.subscribe('sendArticleId', (method, id) => setArticleId(id))
+  PubSub.subscribe('setComment', (method, comment) => {
+    if(comment.level === 1) {
+      setCommentsLevelOne([comment, ...commentsLevelOne])
+    } else {
+      setCommentsLevelTwo([...commentsLevelTwo, comment])
+    }
+  })
 
   return (
     <div>
       {/* 留言显示区 */}
-      {
-        msgs.map((msg) => {
+      { 
+        commentsLevelOne.map((parent) => {
           return (
-            <div key={msg.id}>
+            <div key={parent.id}>
               <CommentItem
-                id={msg.id}
-                nickname={msg.nickname}
-                email={msg.email}
-                content={msg.content}
-                date={msg.date}
-                isReply={false}
+                id={parent.id}
+                articleId={articleId}
+                parentId={parent.id}
+                nickname={parent.nickname}
+                email={parent.email}
+                content={parent.content}
+                level={1}
               >
                 {
-                  replies
-                    .filter((item) => item.msgId === msg.id)
-                    .map((reply) => (
+                  commentsLevelTwo
+                    .filter((item) => item.parentId === parent.id)
+                    .map((child) => (
                       <CommentItem
-                        key={reply.id}
-                        id={reply.id}
-                        nickname={reply.nickname}
-                        email={reply.email}
-                        content={reply.content}
-                        date={reply.date}
-                        isReply={true}
-                        replyToWho={reply.replyToWho}
+                        key={child.id}
+                        id={child.id}
+                        articleId={articleId}
+                        parentId={parent.id}
+                        nickname={child.nickname}
+                        email={child.email}
+                        content={child.content}
+                        replyToWho={child.replyToWho}
+                        level={2}
                       />
                     ))
                 }
