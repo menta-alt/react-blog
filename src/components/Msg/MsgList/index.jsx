@@ -2,56 +2,67 @@
 import React, { useEffect, useState } from 'react'
 import MsgItem from './MsgItem'
 import PubSub from 'pubsub-js' 
-import {httpGet} from '@/utils/api/axios.js'
+import {httpPost} from '@/utils/api/axios.js'
 import './index.less'
 
 
 export default function MsgList() {
-  const [msgs, setMsgs] = useState([])
-  const [replies, setReplies] = useState([])
-
-  PubSub.subscribe('setMsgs', (method, msg) => {
-    setMsgs([msg, ...msgs]) //顺序不要错了
-  })
-  PubSub.subscribe('setReplies', (method, reply) => {
-    setReplies([...replies, reply])
-  })
+  const [isFirst, setIsFirst] = useState(true)
+  const [msgsLevelOne, setMsgsLevelOne] = useState([])
+  const [msgsLevelTwo, setMsgsLevelTwo] = useState([])
+  const [msgCount, setMsgCount] = useState(0)
 
   useEffect(() => {
-    httpGet('/messages').then(res => setMsgs(res))
-    httpGet('/messages/replies').then(res => setReplies(res))
-  }, [])
+    if(isFirst) {
+      httpPost('/messages', { "level": 1 }).then(res => {
+        setIsFirst(false)
+        setMsgsLevelOne(res)
+      })
+      httpPost('/messages', { "level": 2 }).then(res => setMsgsLevelTwo(res))
+    }
+    
+    PubSub.subscribe('setMsgs', (method, msg) => {
+      setMsgsLevelOne([msg, ...msgsLevelOne]) //顺序不要错了
+    })
+    PubSub.subscribe('setReplies', (method, reply) => {
+      setMsgsLevelTwo([...msgsLevelTwo, reply])
+    })
+    PubSub.publish('msgCount', msgCount)
+
+    setMsgCount(msgsLevelOne.length + msgsLevelTwo.length)
+
+  }, [isFirst, msgCount, msgsLevelOne, msgsLevelTwo])
+  
 
   return (
     <div>
       {/* 留言显示区 */}
       {
-        msgs.map((msg) => {
+        msgsLevelOne.map((msg) => {
           return (
             <div key={msg.id}>
               <MsgItem
                 id={msg.id}
-                msgId={msg.id}
+                parentId={msg.id}
                 nickname={msg.nickname}
                 email={msg.email}
                 content={msg.content}
-                date={msg.date}
-                isReply={false}
+                level={1}
               >
                 {
-                  replies
-                    .filter((item) => item.msgId === msg.id)
+                  //因为用的全等，要注意parentId和id的类型
+                  msgsLevelTwo
+                    .filter((item) => item.parentId === msg.id) 
                     .map((reply) => (
                       <MsgItem
                         key={reply.id}
                         id={reply.id}
-                        msgId={msg.id}
+                        parentId={msg.id}
                         nickname={reply.nickname}
                         email={reply.email}
                         content={reply.content}
-                        date={reply.date}
-                        isReply={true}
                         replyToWho={reply.replyToWho}
+                        level={2}
                       />
                     ))
                 }

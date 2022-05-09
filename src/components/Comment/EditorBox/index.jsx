@@ -11,7 +11,7 @@ import './index.less'
 const { TextArea } = Input
 
 // 留言发布的编辑区
-const Editor = ({title, onFinish, onFinishFailed, values, commentRef, level, setShowEditor }) => (
+const Editor = ({title, onFinish, onFinishFailed, submitting, values, commentRef, level, setShowEditor }) => (
   <Form
     name="publishComment"
     onFinish={onFinish}
@@ -61,7 +61,7 @@ const Editor = ({title, onFinish, onFinishFailed, values, commentRef, level, set
       <Input size="large" placeholder="邮箱" allowClear prefix={<MailOutlined />} />
     </Form.Item>
     <Form.Item className='submitBtn'>
-      <Button htmlType="submit" type="primary" size="large" >
+      <Button htmlType="submit" loading={submitting} type="primary" size="large" >
         {title}
       </Button>
     </Form.Item>
@@ -77,8 +77,9 @@ const Editor = ({title, onFinish, onFinishFailed, values, commentRef, level, set
 );
 
 
-export default function EditorBox({ title, level, articleId, parentId, setShowEditor, replyToWho, id }) {
+export default function EditorBox({ title, level, articleId, parentId, setShowEditor, replyToWho}) {
   const commentRef = useRef();
+  const [submitting, setSubmitting] = useState(false)
 
   const [infos, setInfos] = useState({
     comment:'',
@@ -89,9 +90,9 @@ export default function EditorBox({ title, level, articleId, parentId, setShowEd
   // 处理发布或回复留言成功
   const onFinish = values => {
     setInfos(values)
+    setSubmitting(true)
 
     if(level === 1) { //发布评论
-      console.log("articleId1", articleId);
       httpPost('/comments/publish', {
         "articleId": articleId,
         "parentId": 0,
@@ -101,13 +102,14 @@ export default function EditorBox({ title, level, articleId, parentId, setShowEd
         "replyToWho": replyToWho,
         "level": 1
       }).then(comment => {
+        setSubmitting(false)
         PubSub.publish("setComment", comment)
       })
     } else {  //回复评论
       console.log("articleId2", articleId);
       httpPost('/comments/publish', {
         "articleId": articleId,
-        "parentId": parentId,
+        "parentId": parseInt(parentId),
         "nickname": values.nickname,
         "email": values.email,
         "content": values.comment,
@@ -115,15 +117,16 @@ export default function EditorBox({ title, level, articleId, parentId, setShowEd
         "level": 2
       }).then(comment => {
         setShowEditor(false)
+        setSubmitting(false)
         PubSub.publish("setComment", comment)
       })
     }
-    
   }
 
   const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo)
   }
+  
   return (
     <>
       {/* 发布留言区 */}
@@ -133,6 +136,7 @@ export default function EditorBox({ title, level, articleId, parentId, setShowEd
             onFinish={onFinish} 
             onFinishFailed={onFinishFailed} 
             title={title}
+            submitting={submitting}
             values={infos} 
             commentRef={commentRef} 
             level={level}

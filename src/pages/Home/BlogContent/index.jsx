@@ -13,7 +13,6 @@ export default function BlogContent() {
   const [acticleType] = useState(store.getState().articleType)
 
   useEffect(() => {
-    console.log(acticleType);
     // 初始化加载第一页
     if(articlePage === 1) {
       httpPost(`/articles/${acticleType}`, { "page": 1 }).then(res => setBlogData(res))

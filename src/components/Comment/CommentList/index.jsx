@@ -11,29 +11,37 @@ export default function CommentList() {
   const [commentsLevelTwo, setCommentsLevelTwo] = useState([])
   const [articleId, setArticleId] = useState(-1)
   const [commentCount, setCommentCount] = useState(0)
+  const [isFirst, setIsFirst] = useState(true)
 
   useEffect(() => {
-    httpPost('/comments', {
-       "level": 1, 
-       "articleId": articleId 
-    }).then(res => setCommentsLevelOne(res))
-    httpPost('/comments', { 
-      "level": 2,
-      "articleId": articleId 
-    }).then(res => setCommentsLevelTwo(res))
+    if(isFirst) {
+      httpPost('/comments', {
+        "level": 1, 
+        "articleId": articleId
+      }).then(res => {
+        setCommentsLevelOne(res)
+        setIsFirst(false)
+      })
+      httpPost('/comments', { 
+        "level": 2,
+        "articleId": articleId
+      }).then(res => setCommentsLevelTwo(res))
+    }
+
+    PubSub.subscribe('sendArticleId', (method, id) => setArticleId(id))
+    PubSub.subscribe('setComment', (method, comment) => {
+      if(comment.level === 1) {
+        setCommentsLevelOne([comment, ...commentsLevelOne])
+      } else {
+        setCommentsLevelTwo([...commentsLevelTwo, comment])
+      }
+    })
+    PubSub.publish('commentCount', commentCount)
 
     setCommentCount(commentsLevelOne.length + commentsLevelTwo.length)
-  }, [articleId,commentsLevelOne,commentsLevelTwo])
+    
+  }, [isFirst, articleId, commentCount, commentsLevelOne, commentsLevelTwo])
 
-  PubSub.publish('commentCount', commentCount)
-  PubSub.subscribe('sendArticleId', (method, id) => setArticleId(id))
-  PubSub.subscribe('setComment', (method, comment) => {
-    if(comment.level === 1) {
-      setCommentsLevelOne([comment, ...commentsLevelOne])
-    } else {
-      setCommentsLevelTwo([...commentsLevelTwo, comment])
-    }
-  })
 
   return (
     <div>

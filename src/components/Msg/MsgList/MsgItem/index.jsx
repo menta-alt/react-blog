@@ -7,7 +7,7 @@ import EditorBox from '../../EditorBox';
 import moment from 'moment';
 import './index.less'
 
-export default function MsgItem({id, msgId, nickname, email, content, isReply, replyToWho,children}) {  //直接props解构
+export default function MsgItem({id, parentId, nickname, content, level, replyToWho, children}) {  //直接props解构
   const [showEditor, setShowEditor] = useState(false)
 
   const replyHandler = () => {
@@ -19,7 +19,7 @@ export default function MsgItem({id, msgId, nickname, email, content, isReply, r
       <Comment
         actions={[<span key="comment-nested-reply-to" onClick={replyHandler}>回复</span>]}
         author={ 
-          isReply ? <span style={{color: "#192431"}}>{nickname} <span style={{color: "#7DAAFF"}}>@{replyToWho}</span></span> : nickname
+          level === 2 ? <span style={{color: "#192431"}}>{nickname} <span style={{color: "#7DAAFF"}}>@{replyToWho}</span></span> : nickname
         }
         avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
         content={<p>{content}</p>}
@@ -34,11 +34,11 @@ export default function MsgItem({id, msgId, nickname, email, content, isReply, r
             <p className='replyTo'>回复给「{nickname}」:</p>
             <EditorBox
               title="回复"
-              isReply={true}
+              level={2}
               setShowEditor={setShowEditor}
               replyToWho={nickname}
               id={id}
-              msgId={msgId}
+              parentId={parentId}
             />
           </>
 

@@ -7,7 +7,7 @@ import EditorBox from '../../EditorBox';
 import moment from 'moment';
 import './index.less'
 
-export default function CommentItem({id, parentId, articleId, nickname, email, content, level, replyToWho,children}) {  
+export default function CommentItem({id, parentId, articleId, nickname, content, level, replyToWho,children}) {  
   const [showEditor, setShowEditor] = useState(false)
 
   const replyHandler = () => {

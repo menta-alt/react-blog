@@ -13,7 +13,7 @@ import './index.less'
 
 export default function ArticleDetails() {
   const { id } = useParams()
-  const { title, time, viewCounts, commentCounts } = useLocation().state || {}
+  const { title, time, viewCounts } = useLocation().state || {}
   const [content,setContent] = useState('')
   const [tags, setTags] = useState([])
   const [isScroll, setIsScroll] = useState(false)
